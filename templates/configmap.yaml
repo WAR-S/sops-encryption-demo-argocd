@@ -1,18 +1,22 @@
-{{- if .Values.staticContent.enabled }}
+# templates/configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Values.staticContent.configMapName }}
+  name: {{ .Release.Name }}-config
+  labels:
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 data:
   index.html: |
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Static Site</title>
+        <title>{{ .Release.Name }}</title>
     </head>
     <body>
         <h1>Welcome to {{ .Release.Name }}</h1>
         <p>Deployed with Helm and SOPS</p>
     </body>
     </html>
-{{- end }}
