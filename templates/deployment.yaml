@@ -1,4 +1,4 @@
-# templates/deployment.yaml (упрощенный)
+# templates/deployment.yaml (исправленный)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -20,14 +20,14 @@ spec:
           image: "{{ .Values.image.repository | default "nginx" }}:{{ .Values.image.tag | default "alpine" }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           ports:
-            - containerPort: 80
+            - containerPort: {{ .Values.service.targetPort | default 80 }}
               name: http
-          {{- if .Values.staticContent.enabled }}
           volumeMounts:
-            - name: static-content
+            {{- if .Values.staticContent.enabled }}
+            - name: html-content
               mountPath: {{ .Values.staticContent.mountPath | default "/usr/share/nginx/html" }}
               readOnly: true
-          {{- end }}
+            {{- end }}
           {{- if .Values.secrets.envVars }}
           env:
             {{- range $key, $value := .Values.secrets.envVars }}
@@ -36,10 +36,10 @@ spec:
             {{- end }}
           {{- end }}
           resources:
-            {{- toYaml .Values.resources | default dict | nindent 12 }}
-#      {{- if .Values.staticContent.enabled }}
-#      volumes:
-#        - name: static-content
-#          configMap:
-#            name: {{ .Values.staticContent.configMapName | default (printf "%s-html" .Release.Name) }}
-#      {{- end }}
+            {{- toYaml (.Values.resources | default dict) | nindent 12 }}
+      volumes:
+        {{- if .Values.staticContent.enabled }}
+        - name: html-content
+          configMap:
+            name: {{ .Values.staticContent.configMapName | default (printf "%s-html" .Release.Name) }}
+        {{- end }}
