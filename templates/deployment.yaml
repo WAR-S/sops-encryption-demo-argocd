@@ -38,8 +38,6 @@ spec:
           resources:
             {{- toYaml (.Values.resources | default dict) | nindent 12 }}
       volumes:
-        {{- if .Values.staticContent.enabled }}
         - name: html-content
           configMap:
             name: {{ .Values.staticContent.configMapName | default (printf "%s-html" .Release.Name) }}
-        {{- end }}
