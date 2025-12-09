@@ -1,3 +1,4 @@
+# templates/deployment.yaml (упрощенный)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -5,7 +6,7 @@ metadata:
   labels:
     app: {{ .Release.Name }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicaCount | default 1 }}
   selector:
     matchLabels:
       app: {{ .Release.Name }}
@@ -16,17 +17,17 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.image.repository | default "nginx" }}:{{ .Values.image.tag | default "alpine" }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
           ports:
-            - containerPort: {{ .Values.service.targetPort }}
+            - containerPort: 80
               name: http
+          {{- if .Values.staticContent.enabled }}
           volumeMounts:
-            {{- if .Values.staticContent.enabled }}
             - name: static-content
-              mountPath: {{ .Values.staticContent.mountPath }}
+              mountPath: {{ .Values.staticContent.mountPath | default "/usr/share/nginx/html" }}
               readOnly: true
-            {{- end }}
+          {{- end }}
           {{- if .Values.secrets.envVars }}
           env:
             {{- range $key, $value := .Values.secrets.envVars }}
@@ -35,10 +36,10 @@ spec:
             {{- end }}
           {{- end }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resources | default dict | nindent 12 }}
+      {{- if .Values.staticContent.enabled }}
       volumes:
-        {{- if .Values.staticContent.enabled }}
         - name: static-content
           configMap:
-            name: {{ .Values.staticContent.configMapName }}
-        {{- end }}
+            name: {{ .Values.staticContent.configMapName | default (printf "%s-html" .Release.Name) }}
+      {{- end }}
