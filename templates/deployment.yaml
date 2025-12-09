@@ -40,4 +40,4 @@ spec:
       volumes:
         - name: html-content
           configMap:
-            name: z
+            name: z-config
