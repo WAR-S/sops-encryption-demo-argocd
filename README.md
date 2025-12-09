@@ -1,0 +1,1 @@
+# sops-encryption-demo-argocd
