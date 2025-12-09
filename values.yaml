@@ -30,9 +30,7 @@ resources:
 
 staticContent:
   enabled: true
-  # Mount path inside the container
   mountPath: /usr/share/nginx/html
-  # ConfigMap name that contains static files (will be created if not exists)
   configMapName: "{{ .Release.Name }}-static-content"
 
 secrets:
