@@ -1,0 +1,4 @@
+creation_rules:
+  - path_regex: .*\.(sops|enc|secrets)\.yaml$
+    encrypted_regex: ^(secrets|envVars|data|stringData|apiKey|password|token)$
+    pgp: "39B9AE6FF45552CE"

@@ -1,0 +1,40 @@
+# Default values for static-nginx
+replicaCount: 1
+
+image:
+  repository: nginx
+  tag: "alpine"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+resources:
+  limits:
+    memory: "128Mi"
+  requests:
+    memory: "64Mi"
+
+staticContent:
+  enabled: true
+  # Mount path inside the container
+  mountPath: /usr/share/nginx/html
+  # ConfigMap name that contains static files (will be created if not exists)
+  configMapName: "{{ .Release.Name }}-static-content"
+
+secrets:
+  # Environment variables from secrets (encrypted with SOPS)
+  envVars: {}

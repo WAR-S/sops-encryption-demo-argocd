@@ -1,0 +1,25 @@
+secrets:
+    envVars:
+        API_KEY: ENC[AES256_GCM,data:PbT3DoKIcK2Kr1kkucTmlA4=,iv:haMbV/I4AGPGTcvq5h9+6FyFF+yD/A6zrveWLXuv6bY=,tag:llUtKUw/b59bADgwwrhi7g==,type:str]
+        DATABASE_URL: ENC[AES256_GCM,data:kcmzhDbLA7slaGby49RmA0u39UG0TXtTa/3v2dLzkfCCgJ/yXWaxpmiQc+g=,iv:3rAPXD96cQobFCT8jOZjUarzf5A55nZDtEvVodlv0rc=,tag:Xo95CSfWXq2jgo07YgEXlw==,type:str]
+sops:
+    lastmodified: "2025-12-09T15:45:26Z"
+    mac: ENC[AES256_GCM,data:Ob3dta2Z8jGY8xiOjlh9B3rfOi07jxf4LGotn4cPCFwr4VHVUgKEJ+HOJXpx9PPIofjRwMFuDlHdUthNGV9XLZ5MMtQm20A7fttZjtX47MnQuvLVt5H1Ygo7QcAqYPIGIPsmgjeb9ZTOkJ75Y9k+2zntebt9F8QFYab3+KEgJHE=,iv:g4fOdLkimt8hY8exv2kZpwyXDfELCeA8EGKudoLFs1o=,tag:VyIvrc7VCS1+0mdshIirtA==,type:str]
+    pgp:
+        - created_at: "2025-12-09T15:45:26Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAx6Kpd7WhS3iAQf/TRtwVtHasbIliSF4+PUXXM9gN7y4p8D5pZt+9nAiCayi
+            JVDWGBsgZ1x4GtFrORSo/Ki2a0wP/4yO1v2ytMvphSF4lPS++ucMT3rocQgzaczZ
+            /0zu5ZH48ZVtIRVC0UpndTdGb1sERb5KQtibDbwlfQYGOSs2c1AixjW8nzleVnPf
+            Qs90nXsF6512ifNsGK+Op+P+34nphFbDsAl+IyOuLEO25Nn7VdoTIw6bYVbcVXO5
+            fiQXU5ivqHnA70pyF+2oSoNW1R9sIvzUt6StFo0ddkn7y3NNQU+D5hm4e6wbagPE
+            QH3h9kuGW+AUItEfueLTZDcYJU5G7apde3vSTrEm4NRoAQkCEPeI4uiUGNkvemY/
+            6aGTuDJB1dhRX+61AKgW8p0kYZpW/ujDXWbVzm0mGGTpTPpvM8/nJ+qpsm7QeVFW
+            Fix4AZJw7aGlw3HEDgAdgPf59JBnhGKgQRlDc1XArPJXIbUXs6b1lz8=
+            =EOnS
+            -----END PGP MESSAGE-----
+          fp: 39B9AE6FF45552CE
+    encrypted_regex: ^(secrets|envVars|data|stringData|apiKey|password|token)$
+    version: 3.10.2
