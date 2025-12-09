@@ -1,3 +1,4 @@
+# templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -27,11 +28,13 @@ spec:
               mountPath: {{ .Values.staticContent.mountPath }}
               readOnly: true
             {{- end }}
+          {{- if .Values.secrets.envVars }}
           env:
             {{- range $key, $value := .Values.secrets.envVars }}
             - name: {{ $key }}
               value: {{ $value | quote }}
             {{- end }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
