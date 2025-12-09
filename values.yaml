@@ -31,7 +31,7 @@ resources:
 staticContent:
   enabled: true
   mountPath: /usr/share/nginx/html
-  configMapName: "{{ .Release.Name }}-static-content"
+  configMapName: "z-static-content"
 
 secrets:
   # Environment variables from secrets (encrypted with SOPS)
